@@ -1,10 +1,9 @@
 import { StatusBar } from "expo-status-bar";
+import { useFonts } from 'expo-font';
 import React, { useState } from "react";
-import { DonutChart } from "react-native-circular-chart";
+import { PixelRatio, Pressable, StyleSheet, Text, View, Flatlist } from 'react-native';
+import Donut from './Donut.js';
 import {
-  StyleSheet,
-  Text,
-  View,
   Image,
   TextInput,
   Button,
@@ -12,7 +11,7 @@ import {
   ImageBackground
 } from "react-native";
 
-const Info = ({ screenView, setScreenView, info }) => {
+const Info = ({ screenView, setScreenView, info, }) => {
 
   const badges = {
     egg_free: require('../assets/eggFree.jpg'),
@@ -22,48 +21,84 @@ const Info = ({ screenView, setScreenView, info }) => {
     gluten_free: require('../assets/glutenFree.jpg')
   }
 
-  let data= []
+  const radius = PixelRatio.roundToNearestPixel(130);
+  const STROKE_WIDTH = 12;
+
+  let breakdown = info.nutrition.caloricBreakdown;
+
+  const graphColors = {
+    percentProtein: 'red',
+    percentFat: 'blue',
+    percentCarbs: '#ffd000'
+  }
+
+  const image = { uri: "https://static.vecteezy.com/system/resources/previews/005/361/667/original/soft-pink-social-media-duotone-gradient-background-social-network-stories-soft-colorful-theme-bright-graphic-display-wallpaper-modern-vibrant-mobile-app-design-blending-bright-duo-colors-template-vector.jpg" };
 
   return (
     <View>
+      <View className='badge-header' style={{display: 'flex',
+        marginTop: 20,
+        border: '3px dashed #1c87c9',
+        alignItems: 'center',
+        justifyContent:'center',
+        marginTop: 60}}>
+        <Text style={styles.header}>Badges</Text>
+        </View>
       <View className='badge-container' style={styles.container}>
         {info.badges.map((item, i) => {
-          console.log(badges[item])
+          // console.log(badges[item])
           return (
-            badges[item] ? <Image key={i} style={styles.tinyLogo} source={badges[item]}/> : null
+            badges[item] ? <Image key={i} style={styles.tinyLogo} source={badges[item]} /> : null
           )
         })}
       </View>
-      <View className='graph-container'>
-      {/* <DonutChart
-    data={data}
-    strokeWidth={15}
-    radius={90}
-    containerHeight={105 * 2}
-    type="round"
-    startAngle={0}
-    endAngle={360}
-    animationType="slide"
-  /> */}
+      <View className='nutrition-header' style={{display: 'flex',
+        marginTop: 20,
+        border: '3px dashed #1c87c9',
+        alignItems: 'center',
+        justifyContent:'center'}}>
+        <Text style={styles.header}>Nutrition Breakdown</Text>
+        </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center'}}>
+
+        {Object.keys(breakdown).map((key, i) => {
+          console.log(key)
+          return (
+            <Donut key={i} percentage={breakdown[key]} color={graphColors[key]} delay={500 + 100 * i} max={100} title={key} />
+          )
+        })}
       </View>
+      <View style={{ flexDirection: 'row', marginLeft: 20 }}>
+        <Donut percentage={info.score} color={'#f4e409'} delay={500 + 100} max={100} type='Overall Score'/>
+      </View>
+      <View className='ingredients-header' style={{display: 'flex',
+        border: '3px dashed #1c87c9',
+        alignItems: 'center',
+        justifyContent:'center',
+        marginBottom: 15}}>
+        <Text style={styles.header}>Ingredients</Text>
+        </View>
       <View className='ingredient-container'>
         {info.ingredients.map((item, i) => {
-          return(
+          return (
             <Text key={i} >{item.name}</Text>
           )
         })}
       </View>
-    <Text>
-      {info.description}
-    </Text>
+      <Text>
+        {info.description}
+      </Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  app: {
+    backgroundColor: 'blue'
+  },
   container: {
-    paddingTop: 50,
-    display:'flex',
+    paddingTop: 15,
+    display: 'flex',
     flexDirection: 'row'
   },
   tinyLogo: {
@@ -74,6 +109,9 @@ const styles = StyleSheet.create({
     width: 66,
     height: 58,
   },
+  header: {
+    fontSize: 27
+  }
 });
 
 export default Info

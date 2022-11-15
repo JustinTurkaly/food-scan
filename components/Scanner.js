@@ -26,7 +26,7 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setText(data)
-    console.log('Type: ' + type + '\nData: ' + data)
+    // console.log('Type: ' + type + '\nData: ' + data)
   };
 
 
@@ -62,7 +62,7 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
             title: result.title
           })
           setScreenView(3)
-          console.log(info)
+          // console.log(info)
         })
         .catch((err) => {
           console.log(err)
