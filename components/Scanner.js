@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import axios from 'axios';
 
+
 export default function Scanner({screenView, setScreenView, info, setInfo}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(true);
@@ -35,11 +36,11 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
     let flag = false;
     const config = {
       headers: {
-        'x-api-key': '4405bda7befe464e8dc5e6942dec0372'
+        'x-api-key': "4405bda7befe464e8dc5e6942dec0372"
       }
     }
 
-    // console.log(typeof text)
+    console.log(config)
     // console.log(text[0])
 
     if (text[0] === '0' && text[1] === '0'){
@@ -48,10 +49,11 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
 
     axios.get(`https://api.spoonacular.com/food/products/upc/051500720028`, config)
         .then((data) => {
-          // console.log('success', data)
+          console.log('success', data)
           // console.log(data.data.description)
           let result = data.data
           setInfo({
+            id: result.id,
             description: result.description,
             badges: result.badges,
             ingredientList: result.ingredientList,

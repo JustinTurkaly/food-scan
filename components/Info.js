@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from 'expo-font';
 import React, { useState } from "react";
-import { PixelRatio, Pressable, StyleSheet, Text, View, Flatlist } from 'react-native';
+import { PixelRatio, Pressable, StyleSheet, Text, View, FlatList, TouchableHighlight } from 'react-native';
 import Donut from './Donut.js';
 import {
   Image,
@@ -25,11 +25,14 @@ const Info = ({ screenView, setScreenView, info, }) => {
   const STROKE_WIDTH = 12;
 
   let breakdown = info.nutrition.caloricBreakdown;
+  breakdown.score = info.score;
+  console.log(breakdown)
 
   const graphColors = {
     percentProtein: 'red',
     percentFat: 'blue',
-    percentCarbs: '#ffd000'
+    percentCarbs: '#ffd000',
+    score: 'green'
   }
 
   const image = { uri: "https://static.vecteezy.com/system/resources/previews/005/361/667/original/soft-pink-social-media-duotone-gradient-background-social-network-stories-soft-colorful-theme-bright-graphic-display-wallpaper-modern-vibrant-mobile-app-design-blending-bright-duo-colors-template-vector.jpg" };
@@ -60,16 +63,20 @@ const Info = ({ screenView, setScreenView, info, }) => {
         <Text style={styles.header}>Nutrition Breakdown</Text>
         </View>
       <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center'}}>
-
-        {Object.keys(breakdown).map((key, i) => {
+        {/* {Object.keys(breakdown).map((key, i) => {
           console.log(key)
           return (
             <Donut key={i} percentage={breakdown[key]} color={graphColors[key]} delay={500 + 100 * i} max={100} title={key} />
           )
-        })}
-      </View>
-      <View style={{ flexDirection: 'row', marginLeft: 20 }}>
-        <Donut percentage={info.score} color={'#f4e409'} delay={500 + 100} max={100} type='Overall Score'/>
+        })} */}
+
+        <FlatList
+          data={Object.keys(breakdown)}
+          horizontal={true}
+          renderItem={({ item, index, separators }) => (
+            <Donut key={index} percentage={breakdown[item]} color={graphColors[item]} delay={500 + 100 * index} max={100} title={item} type={item !== 'score' ? undefined : 'score'}/>
+          )}
+          />
       </View>
       <View className='ingredients-header' style={{display: 'flex',
         border: '3px dashed #1c87c9',
