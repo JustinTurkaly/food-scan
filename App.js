@@ -5,6 +5,7 @@ import { ImageBackground, StyleSheet, Text, View, SafeAreaView, TextInput, Butto
 import Login  from './components/Login.js';
 import Scanner  from './components/Scanner.js'
 import Info from './components/Info.js'
+import MainNav from './components/MainNav.js'
 
 const image = { uri: "https://static.vecteezy.com/system/resources/previews/005/361/667/original/soft-pink-social-media-duotone-gradient-background-social-network-stories-soft-colorful-theme-bright-graphic-display-wallpaper-modern-vibrant-mobile-app-design-blending-bright-duo-colors-template-vector.jpg" };
 
@@ -31,7 +32,8 @@ const App = () => {
     </ImageBackground>
   </View>,
   2: <Scanner screenView={screenView} setScreenView={setScreenView} info={info} setInfo={setInfo}></Scanner>,
-  3: <Info info={info} setInfo={setInfo}/>
+  3: <Info info={info} setInfo={setInfo}/>,
+  4: <MainNav info={info} setInfo={setInfo}/>
     }
 
     return directory[screenView]

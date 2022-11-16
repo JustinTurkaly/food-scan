@@ -1,7 +1,8 @@
+import {useEffect} from 'react'
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from 'expo-font';
 import React, { useState } from "react";
-import { PixelRatio, Pressable, StyleSheet, Text, View, FlatList, TouchableHighlight } from 'react-native';
+import { PixelRatio, Pressable, StyleSheet, Text, View, FlatList, TouchableHighlight, ScrollView } from 'react-native';
 import Donut from './Donut.js';
 import {
   Image,
@@ -11,7 +12,10 @@ import {
   ImageBackground
 } from "react-native";
 
-const Info = ({ screenView, setScreenView, info, }) => {
+const Info = ({route}) => {
+  // console.log('props', route)
+  let data = route.params;
+  const [firstRender, setFirstRender] = useState(false)
 
   const badges = {
     egg_free: require('../assets/eggFree.jpg'),
@@ -24,9 +28,13 @@ const Info = ({ screenView, setScreenView, info, }) => {
   const radius = PixelRatio.roundToNearestPixel(130);
   const STROKE_WIDTH = 12;
 
-  let breakdown = info.nutrition.caloricBreakdown;
-  breakdown.score = info.score;
-  console.log(breakdown)
+  // useEffect(() => {
+  //   if (firstRender === false) {
+  //     setFirstRender(true)
+  //     console.log(info)
+  //   }
+  //   // setInfo(info)
+  // }, [info])
 
   const graphColors = {
     percentProtein: 'red',
@@ -37,8 +45,27 @@ const Info = ({ screenView, setScreenView, info, }) => {
 
   const image = { uri: "https://static.vecteezy.com/system/resources/previews/005/361/667/original/soft-pink-social-media-duotone-gradient-background-social-network-stories-soft-colorful-theme-bright-graphic-display-wallpaper-modern-vibrant-mobile-app-design-blending-bright-duo-colors-template-vector.jpg" };
 
+
+    // if (!info.nutrition) {
+    //   let breakdown = {}
+    // } else {
+      // }
+      // console.log(info)
+      // let breakdown = info.nutrition.caloricBreakdown
+
+      let flag = true;
+      if (flag === false) {
+        return (
+          <Text>test</Text>
+          )
+        }
+
+        let breakdown = data.nutrition.caloricBreakdown
+        breakdown.score = data.score;
+
   return (
-    <View>
+    <ScrollView>
+    <View style={{display: 'flex'}}>
       <View className='badge-header' style={{display: 'flex',
         marginTop: 20,
         border: '3px dashed #1c87c9',
@@ -48,7 +75,7 @@ const Info = ({ screenView, setScreenView, info, }) => {
         <Text style={styles.header}>Badges</Text>
         </View>
       <View className='badge-container' style={styles.container}>
-        {info.badges.map((item, i) => {
+        {data.badges.map((item, i) => {
           // console.log(badges[item])
           return (
             badges[item] ? <Image key={i} style={styles.tinyLogo} source={badges[item]} /> : null
@@ -86,16 +113,17 @@ const Info = ({ screenView, setScreenView, info, }) => {
         <Text style={styles.header}>Ingredients</Text>
         </View>
       <View className='ingredient-container'>
-        {info.ingredients.map((item, i) => {
+        {data.ingredients.map((item, i) => {
           return (
             <Text key={i} >{item.name}</Text>
           )
         })}
       </View>
       <Text>
-        {info.description}
+        {data.description}
       </Text>
     </View>
+    </ScrollView>
   );
 }
 

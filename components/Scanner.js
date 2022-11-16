@@ -40,7 +40,7 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
       }
     }
 
-    console.log(config)
+    // console.log(config)
     // console.log(text[0])
 
     if (text[0] === '0' && text[1] === '0'){
@@ -49,7 +49,7 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
 
     axios.get(`https://api.spoonacular.com/food/products/upc/051500720028`, config)
         .then((data) => {
-          console.log('success', data)
+          // console.log('success', data)
           // console.log(data.data.description)
           let result = data.data
           setInfo({
@@ -63,8 +63,8 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
             score: result.spoonacularScore,
             title: result.title
           })
-          setScreenView(3)
           // console.log(info)
+          setScreenView(4)
         })
         .catch((err) => {
           console.log(err)
