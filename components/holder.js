@@ -22,10 +22,8 @@ export default function Login({ screenView, setScreenView }) {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../assets/backgroundlogin.png')} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <StatusBar style="auto" />
-        <View style={styles.form}>
-          <Image source={require('../assets/newestlogo.png')} style={styles.logo} resizeMode="contain"/>
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -52,10 +50,6 @@ export default function Login({ screenView, setScreenView }) {
         <TouchableOpacity style={styles.loginBtn} onPress={()=>{setScreenView(screenView + 1)}}>
           <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} onPress={()=>{setScreenView(5)}}>
-          <Text style={styles.loginText}>Sign Up</Text>
-        </TouchableOpacity>
-        </View>
       </ImageBackground>
     </View>
   );
@@ -103,22 +97,8 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 40,
     backgroundColor: "white",
   },
-
-  form: {
-    marginTop: 200
-  },
-
-  logo: {
-    width: '70%',
-    height: 100,
-    marginLeft: 72,
-    marginBottom: 40
-  }
 });
-
-
-
 

@@ -12,7 +12,7 @@ const Ingredient = ({text}) => {
         <Text style={styles.itemText}>{text}</Text>
       </View>
       <View>
-      <FloatingButton style={{bottom: 15, right: 10}}/>
+      <FloatingButton text={text} style={{bottom: 15, right: 10}}/>
       </View>
     </View>
   )
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap'
   },
   square: {
-    width: 24,
-    height: 24,
-    backgroundColor: '#55BCF6',
+    width: 14,
+    height: 14,
+    backgroundColor: '#00214d',
     opacity: 0.4,
-    borderRadius: 5,
+    borderRadius: 14/2,
     marginRight: 15,
   },
   itemText: {

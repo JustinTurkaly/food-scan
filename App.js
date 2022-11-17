@@ -6,6 +6,7 @@ import Login  from './components/Login.js';
 import Scanner  from './components/Scanner.js'
 import Info from './components/Info.js'
 import MainNav from './components/MainNav.js'
+import Signup from './components/Signup.js'
 
 const image = { uri: "https://static.vecteezy.com/system/resources/previews/005/361/667/original/soft-pink-social-media-duotone-gradient-background-social-network-stories-soft-colorful-theme-bright-graphic-display-wallpaper-modern-vibrant-mobile-app-design-blending-bright-duo-colors-template-vector.jpg" };
 
@@ -20,7 +21,7 @@ const App = () => {
     let directory = {
       0: <Login screenView={screenView} setScreenView={setScreenView}/>,
     1: <View style={styles.container}>
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+    <ImageBackground source={require('./assets/camBackground.png')} resizeMode="cover" style={styles.image}>
     <TouchableOpacity style={styles.loginBtn} onPress={()=>{setScreenView(screenView + 1)}}>
           <Text style={styles.loginText}>Scan Food</Text>
         </TouchableOpacity>
@@ -33,7 +34,8 @@ const App = () => {
   </View>,
   2: <Scanner screenView={screenView} setScreenView={setScreenView} info={info} setInfo={setInfo}></Scanner>,
   3: <Info info={info} setInfo={setInfo}/>,
-  4: <MainNav info={info} setInfo={setInfo}/>
+  4: <MainNav info={info} setInfo={setInfo}/>,
+  5: <Signup screenView={screenView} setScreenView={setScreenView}/>
     }
 
     return directory[screenView]

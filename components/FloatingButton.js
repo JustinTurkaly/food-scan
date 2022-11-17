@@ -58,7 +58,7 @@ export default class FloatingButton extends React.Component {
                 {
                     rotate: this.animation.interpolate({
                         inputRange: [0, 1],
-                        outputRange: ["0deg", "45deg"]
+                        outputRange: ["0deg", "90deg"]
                     })
                 }
             ]
@@ -69,29 +69,41 @@ export default class FloatingButton extends React.Component {
             outputRange: [0, 0, 1]
         });
 
+        const handleLike = (word) => {
+          console.log('in like func', word)
+        }
+
+        const handleDislike = (word) => {
+          console.log('in dislike func', word)
+        }
+
+        const handleSearch = (word) => {
+          console.log('in search func', word)
+        }
+
         return (
             <View style={[styles.container, this.props.style]}>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={()=>{handleLike(this.props.text)}}>
                     <Animated.View style={[styles.button, styles.secondary, heartStyle, opacity]}>
-                        <AntDesign name="hearto" size={20} color="#F02A4B" />
+                        <AntDesign name="hearto" size={20} color="#ff5470" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={()=>{handleDislike(this.props.text)}}>
                     <Animated.View style={[styles.button, styles.secondary, thumbStyle, opacity]}>
-                        <Entypo name="thumbs-up" size={20} color="#F02A4B" />
+                        <Entypo name="thumbs-up" size={20} color="#ff5470" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={()=>{handleSearch(this.props.text)}}>
                     <Animated.View style={[styles.button, styles.secondary, pinStyle, opacity]}>
-                        <Entypo name="thumbs-down" size={20} color="#F02A4B" />
+                        <Entypo name="thumbs-down" size={20} color="#ff5470" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
 
                 <TouchableWithoutFeedback onPress={this.toggleMenu}>
                     <Animated.View style={[styles.button, styles.menu, rotation]}>
-                    <FontAwesome name="angle-double-left" size={24} color="#FFF" />
+                    <FontAwesome name="angle-double-left" size={24} color="#00214d" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
             </View>
@@ -112,12 +124,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         shadowRadius: 10,
-        shadowColor: "#F02A4B",
+        shadowColor: "#ff5470",
         shadowOpacity: 0.3,
         shadowOffset: { height: 10 }
     },
     menu: {
-        backgroundColor: "#F02A4B"
+        backgroundColor: "#00ebc7"
     },
     secondary: {
         width: 30,

@@ -1,9 +1,13 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from 'expo-font';
 import React, { useState } from "react";
 import { PixelRatio, Pressable, StyleSheet, Text, View, FlatList, TouchableHighlight, ScrollView } from 'react-native';
-import Donut from './Donut.js';
+import { Foundation } from '@expo/vector-icons'; import Donut from './Donut.js';
+import Price from './Price.js';
+import Cents from './Cents.js';
+import Calories from './Calories.js'
+
 import {
   Image,
   TextInput,
@@ -12,7 +16,7 @@ import {
   ImageBackground
 } from "react-native";
 
-const Info = ({route}) => {
+const Info = ({ route }) => {
   // console.log('props', route)
   let data = route.params;
   const [firstRender, setFirstRender] = useState(false)
@@ -45,84 +49,93 @@ const Info = ({route}) => {
 
   const image = { uri: "https://static.vecteezy.com/system/resources/previews/005/361/667/original/soft-pink-social-media-duotone-gradient-background-social-network-stories-soft-colorful-theme-bright-graphic-display-wallpaper-modern-vibrant-mobile-app-design-blending-bright-duo-colors-template-vector.jpg" };
 
+  let flag = true;
+  if (flag === false) {
+    return (
+      <Text>test</Text>
+    )
+  }
 
-    // if (!info.nutrition) {
-    //   let breakdown = {}
-    // } else {
-      // }
-      // console.log(info)
-      // let breakdown = info.nutrition.caloricBreakdown
-
-      let flag = true;
-      if (flag === false) {
-        return (
-          <Text>test</Text>
-          )
-        }
-
-        let breakdown = data.nutrition.caloricBreakdown
-        breakdown.score = data.score;
+  let breakdown = data.nutrition.caloricBreakdown
+  breakdown.score = data.score;
 
   return (
     <ScrollView>
-    <View style={{display: 'flex'}}>
-      <View className='badge-header' style={{display: 'flex',
-        marginTop: 20,
-        border: '3px dashed #1c87c9',
-        alignItems: 'center',
-        justifyContent:'center',
-        marginTop: 60}}>
-        <Text style={styles.header}>Badges</Text>
-        </View>
-      <View className='badge-container' style={styles.container}>
-        {data.badges.map((item, i) => {
-          // console.log(badges[item])
-          return (
-            badges[item] ? <Image key={i} style={styles.tinyLogo} source={badges[item]} /> : null
-          )
-        })}
-      </View>
-      <View className='nutrition-header' style={{display: 'flex',
-        marginTop: 20,
-        border: '3px dashed #1c87c9',
-        alignItems: 'center',
-        justifyContent:'center'}}>
-        <Text style={styles.header}>Nutrition Breakdown</Text>
-        </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center'}}>
-        {/* {Object.keys(breakdown).map((key, i) => {
-          console.log(key)
-          return (
-            <Donut key={i} percentage={breakdown[key]} color={graphColors[key]} delay={500 + 100 * i} max={100} title={key} />
-          )
-        })} */}
 
-        <FlatList
-          data={Object.keys(breakdown)}
-          horizontal={true}
-          renderItem={({ item, index, separators }) => (
-            <Donut key={index} percentage={breakdown[item]} color={graphColors[item]} delay={500 + 100 * index} max={100} title={item} type={item !== 'score' ? undefined : 'score'}/>
-          )}
-          />
-      </View>
-      <View className='ingredients-header' style={{display: 'flex',
-        border: '3px dashed #1c87c9',
-        alignItems: 'center',
-        justifyContent:'center',
-        marginBottom: 15}}>
-        <Text style={styles.header}>Ingredients</Text>
+      <View style={{ display: 'flex', backgroundColor: '#a5a5a5' }}>
+        <View className='top-row' style={{ display: 'flex', flexDirection: 'row' }}>
+          <View style={{ display: 'flex', flexDirection: 'column', borderRadius: 10, backgroundColor: 'white', width: '45%', height: 110, marginTop: 25, marginLeft: 15, borderWidth: 2, borderColor: 'gray', elevation: 10, shadowColor: 'black', shadowOpacity: '0.25', shadowRadius: 4 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
+              <Price />
+              <View style={styles.square}></View>
+              <Cents />
+            </View>
+            <Text style={{ textAlign: 'center', fontSize: 30 }}>DOLLARS</Text>
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'column', borderRadius: 10, backgroundColor: 'white', width: '45%', height: 110, marginTop: 25, marginLeft: 15, borderWidth: 2, borderColor: 'gray', elevation: 10, shadowColor: 'black', shadowOpacity: '0.25', shadowRadius: 4 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
+              <Calories />
+            </View>
+            <Text style={{ textAlign: 'center', fontSize: 30 }}>CALORIES</Text>
+          </View>
         </View>
-      <View className='ingredient-container'>
-        {data.ingredients.map((item, i) => {
-          return (
-            <Text key={i} >{item.name}</Text>
-          )
-        })}
+        <View className='second-row' style={{ backgroundColor: 'white', borderRadius: 10, backgroundColor: 'white', width: '93%', height: 140, marginTop: 25, marginLeft: 15, borderWidth: 2, borderColor: 'gray', elevation: 10, shadowColor: 'black', shadowOpacity: '0.25', shadowRadius: 4 }}>
+          <View className='badge-header' style={{
+            display: 'flex',
+            marginTop: 5,
+            border: '3px dashed #1c87c9',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <Text style={styles.header}>Badges</Text>
+          </View>
+          <View className='badge-container' style={styles.container}>
+            {data.badges.map((item, i) => {
+              // console.log(badges[item])
+              return (
+                badges[item] ? <Image key={i} style={styles.tinyLogo} source={badges[item]} /> : null
+              )
+            })}
+          </View>
+        </View>
+        <View className='third-row' style={{ backgroundColor: 'white', borderRadius: 10, backgroundColor: 'white', width: '93%', height: 230, marginTop: 25, marginLeft: 15, borderWidth: 2, borderColor: 'gray', elevation: 10, shadowColor: 'black', shadowOpacity: '0.25', shadowRadius: 4 }}>
+          <View className='nutrition-header' style={{
+            display: 'flex',
+            marginTop: 10,
+            border: '3px dashed #1c87c9',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={styles.header}>Nutrition Breakdown</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center' }}>
+            <FlatList
+              data={Object.keys(breakdown)}
+              horizontal={true}
+              renderItem={({ item, index, separators }) => (
+                <Donut key={index} percentage={breakdown[item]} color={graphColors[item]} delay={500 + 100 * index} max={100} title={item} type={item !== 'score' ? undefined : 'score'} />
+              )}
+            />
+          </View>
+        </View>
+        <View className='fourth-row' style={{ backgroundColor: 'white', borderRadius: 10, backgroundColor: 'white', width: '93%', height: 230, marginTop: 25, marginLeft: 15, borderWidth: 2, borderColor: 'gray', elevation: 10, shadowColor: 'black', shadowOpacity: '0.25', shadowRadius: 4 }}>
+          <View className='description-header' style={{
+            display: 'flex',
+            border: '3px dashed #1c87c9',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 8,
+            marginBottom: 3
+          }}>
+            <Text style={styles.header}>Description</Text>
+          </View>
+          <ScrollView>
+          <Text style={{marginLeft: 5, fontSize: 18}}>
+            {data.description}
+          </Text>
+          </ScrollView>
+        </View>
       </View>
-      <Text>
-        {data.description}
-      </Text>
-    </View>
     </ScrollView>
   );
 }
@@ -134,11 +147,14 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 15,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+    marginRight: 10
   },
   tinyLogo: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
   },
   logo: {
     width: 66,
@@ -146,7 +162,29 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 27
-  }
+  },
+  square: {
+    width: 10,
+    height: 10,
+    backgroundColor: '#00214d',
+    opacity: 0.4,
+    borderRadius: 10 / 2,
+    marginTop: 47,
+    marginLeft: 11
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingVertical: 45,
+    paddingHorizontal: 25,
+    width: '100%',
+    marginVertical: 10,
+  },
+  elevation: {
+    elevation: 20,
+    shadowColor: '#52006A',
+  },
 });
+
 
 export default Info

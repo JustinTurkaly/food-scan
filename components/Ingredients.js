@@ -59,7 +59,7 @@ export default function Ingredients({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor:'#a5a5a5',
   },
   tasksWrapper: {
     paddingTop: 80,

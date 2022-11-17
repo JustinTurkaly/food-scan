@@ -50,10 +50,11 @@ export default function Scanner({screenView, setScreenView, info, setInfo}) {
     axios.get(`https://api.spoonacular.com/food/products/upc/051500720028`, config)
         .then((data) => {
           // console.log('success', data)
-          // console.log(data.data.description)
+          // console.log(data.data)
           let result = data.data
           setInfo({
             id: result.id,
+            photos: result.images,
             description: result.description,
             badges: result.badges,
             ingredientList: result.ingredientList,
