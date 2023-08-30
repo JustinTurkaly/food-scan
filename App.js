@@ -14,7 +14,7 @@ const App = () => {
   const [screenView, setScreenView] = useState(0);
   const [text, onChangeText] = useState("Useless Text");
   const [number, onChangeNumber] = useState(null);
-  const [info, setInfo] = useState({false});
+  const [info, setInfo] = useState({true});
 
   const screenRender = (page) => {
 
